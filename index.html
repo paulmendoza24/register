@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Basketball Registration</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #ADD8E6;
+    }
+    .container {
+      width: 50%;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-top: 50px;
+    }
+    h1, h2 {
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+
+    /* Responsive Design */
+    @media screen and (max-width: 768px) {
+      .container {
+        width: 80%;  /* Container will be 80% on smaller screens */
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .container {
+        width: 90%;  /* Further reduced width for very small screens */
+      }
+
+      input, button {
+        padding: 8px;  /* Smaller padding for smaller screens */
+      }
+
+      h1, h2 {
+        font-size: 18px;  /* Slightly smaller text for better readability */
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>BSCS Afternoon</h1>
+  <h2>Basketball Registration</h2>
+  <form id="registrationForm">
+    <label for="name">Full Name:</label>
+    <input type="text" id="name" name="name" required>
+    
+    <button type="submit">Register</button>
+  </form>
+</div>
+
+<script>
+  document.getElementById('registrationForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    const name = document.getElementById('name').value;
+
+    const formData = {
+      name: name
+    };
+
+    // Call a function to send the data to Google Sheets (Google Apps Script or API)
+    submitFormData(formData);
+  });
+
+  function submitFormData(data) {
+    fetch('https://script.google.com/macros/s/AKfycbwtUw5F2th6IoxRCF8iyU1aVnYnlOKfPDwTKKL5IcY7OHLmJ4cj5L87i05_dYKRUt4M/exec', {
+      method: 'POST',
+      body: new URLSearchParams({ name: data.name }),  // Sending data as URL-encoded
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'  // Specify the correct content type
+      }
+    })
+    .then(response => response.json())
+    .then(result => {
+      alert('Registration successful!');
+    })
+    .catch(error => {
+      alert('Error registering. Please try again.');
+      console.error('Error:', error);
+    });
+  }
+  
+</script>
+
+</body>
+</html>
